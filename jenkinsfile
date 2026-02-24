@@ -12,7 +12,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Checking out source code from GitHub...'
-                git branch: 'main', url: 'https://github.com/Venusri123/devops-ecs-ci-cd.git'
+                git branch: 'main', url: 'git@github.com:Venusri123/devops-ecs-ci-cd.git'
             }
         }
 
