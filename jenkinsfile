@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        AWS_REGION = 'ap-south-1'
+        AWS_REGION = 'us-west-1'
         ECR_REPO = 'nyeras-project'
         IMAGE_TAG = 'latest' // Or "${env.BUILD_NUMBER}" for unique tag
         AWS_ACCOUNT_ID = 789065179702
@@ -27,8 +27,8 @@ pipeline {
             steps {
                 echo 'Authenticating Docker with AWS ECR...'
                 sh """
-                    aws ecr get-login-password --region ap-south-1 | \
-                    docker login --username AWS --password-stdin 789065179702.dkr.ecr.ap-south-1.amazonaws.com
+                    aws ecr get-login-password --region us-west-1 | \
+                    docker login --username AWS --password-stdin 789065179702.dkr.ecr.us-west-1.amazonaws.com
                 """
             }
         }
@@ -36,14 +36,14 @@ pipeline {
         stage('Tag Docker Image') {
             steps {
                 echo 'Tagging Docker image for ECR...'
-                sh "docker tag nyeras-project:latest 789065179702.dkr.ecr.ap-south-1.amazonaws.com/nyeras-project:latest"
+                sh "docker tag nyeras-project:latest 789065179702.dkr.ecr.us-west-1.amazonaws.com/nyeras-project:latest"
             }
         }
 
         stage('Push to ECR') {
             steps {
                 echo 'Pushing Docker image to AWS ECR...'
-                sh "docker push 789065179702.dkr.ecr.ap-south-1.amazonaws.com/nyeras-project:latest"
+                sh "docker push 789065179702.dkr.ecr.us-west-1.amazonaws.com/nyeras-project:latest"
             }
         }
     }
